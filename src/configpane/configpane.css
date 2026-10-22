@@ -1,0 +1,709 @@
+/* 
+ * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+ * See LICENSE in the project root for license information.
+ */
+
+ [hidden] {
+    display: none !important;
+ }
+
+ html, body { background: transparent; color: #243b4a; font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif; }
+ .ms-welcome__main.config-main { box-sizing: border-box; padding: 0 16px 24px; }
+
+ .config-header {
+    padding: 22px 16px 12px;
+ }
+
+ .config-header h1 {
+    margin: 0 0 6px;
+    color: #113b51;
+    font-size: 22px;
+ }
+
+ .config-header p {
+    margin: 0;
+    color: #5b6570;
+    line-height: 1.5;
+ }
+
+ .config-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+    width: 100%;
+    padding: 0;
+    border-bottom: 1px solid #b8cbd7;
+    background: #fff;
+ }
+
+ .config-tabs button {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 46px;
+    margin: 4px 0 -1px;
+    padding: 8px 5px;
+    border: 1px solid #ccd6dc;
+    border-radius: 6px 6px 0 0;
+    background: #edf2f5;
+    color: #113b51;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: normal;
+    cursor: pointer;
+ }
+
+ .config-tabs button[aria-selected="true"] {
+    margin-top: 0;
+    padding-top: 11px;
+    border-color: #b8cbd7;
+    border-bottom-color: #fff;
+    background: #fff;
+    color: #113b51;
+ }
+
+ .config-tabs button:focus-visible {
+    outline: 2px solid #0f6cbd;
+    outline-offset: 2px;
+ }
+
+ .config-panel {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 20px 16px;
+    border: 1px solid #b8cbd7;
+    border-top: 0;
+    border-radius: 0 0 7px 7px;
+    background: #fff;
+ }
+
+ .config-panel .container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 0 16px;
+    overflow-wrap: anywhere;
+ }
+
+ .config-panel .ally-model-settings { margin: 0; padding: 0; border: 0; border-radius: 0; }
+ .config-panel .ally-model-settings + .ally-model-settings { margin-top: 24px; padding-top: 24px; border-top: 1px solid #dce4e9; }
+ .config-panel .ally-model-settings h3 { font-size: 16px; color: #113b51; }
+ .config-panel .ally-model-actions button:first-child { border-color: #b8cbd7; background: #f3f6f8; color: #113b51; }
+ .config-main .change-button, .config-main .save-button, .config-main .delete-button {
+    box-sizing: border-box; min-height: 34px; padding: 7px 11px; border: 1px solid transparent;
+    border-radius: 4px; font: inherit; font-size: 12px; line-height: 1.35;
+ }
+ #config-panel-prompts .change-button { border-color: #b8cbd7; background: #f3f6f8; color: #113b51; }
+ #config-panel-prompts .save-button { border-color: #113b51; background: #113b51; color: #fff; }
+ #config-panel-prompts .change-button:enabled:hover { background: #e8eef2; }
+ #config-panel-prompts .save-button:enabled:hover { background: #244f64; }
+
+ html,
+ body {
+     width: 100%;
+     height: 100%;
+     margin: 0;
+     padding: 0;
+ }
+ 
+ ul {
+     margin: 0;
+     padding: 0;
+ }
+ 
+ .ms-welcome__header {
+    padding: 20px;
+    padding-bottom: 30px;
+    padding-top: 100px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+ }
+
+ .ms-welcome__main {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex: 1 0 0;
+    flex: 1 0 0;
+    padding: 10px 20px;
+ }
+ 
+ .ms-welcome__main > h2 {
+     width: 100%;
+     text-align: center;
+ }
+ 
+ .ms-welcome__features {
+     list-style-type: none;
+     margin-top: 20px;
+ }
+ 
+ .ms-welcome__features.ms-List .ms-ListItem {
+     padding-bottom: 20px;
+     display: -webkit-flex;
+     display: flex;
+ }
+ 
+ .ms-welcome__features.ms-List .ms-ListItem > .ms-Icon {
+     margin-right: 10px;
+ }
+ 
+ .ms-welcome__action.ms-Button--hero {
+     margin-top: 30px;
+ }
+ 
+.ms-Button.ms-Button--hero .ms-Button-label {
+  color: #0078d7;
+}
+
+.ms-Button.ms-Button--hero:hover .ms-Button-label,
+.ms-Button.ms-Button--hero:focus .ms-Button-label{
+  color: #005a9e;
+  cursor: pointer;
+}
+
+b {
+    font-weight: bold;
+}
+
+.warning-ribbon {
+    position: fixed; /* Stays at the top of the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #39a30f; /* Light red background */
+    color: #ffffff; /* Dark red text */
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    border-bottom: 2px solid #39a30f; /* Slightly darker border */
+    z-index: 1000; /* Ensures the ribbon is on top of other content */
+    opacity: 1;
+    transition: opacity 1s ease-in-out; /* Smooth fade-out effect */
+  }
+  
+  .warning-ribbon.fade-out {
+    opacity: 0;
+  }
+
+  .warning-ribbon.fade-in {
+    opacity: 1;
+  }
+
+  .container {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    width: 90%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+.config-input {
+    width: 92%;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.config-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #113b51;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.config-button:hover {
+    background-color: #45788b;
+}
+
+.config-panel #policy-container {
+    display: grid;
+    gap: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.policy-set-manager,
+.policy-browser {
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background-color: #fff;
+}
+
+.policy-set-manager {
+    padding: 0;
+}
+
+.policy-set-list { display: grid; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.policy-set-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
+.policy-set-row > span:first-child { min-width: 0; max-width: 100%; overflow-wrap: anywhere; font-size: 14px; }
+.policy-set-row .policy-set-rename-editor { flex-basis: 100%; }
+.policy-browser { padding-top: 20px; border-top: 1px solid #dce4e9; }
+
+.policy-set-heading {
+    margin: 0 0 14px;
+    color: #113b51;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.policy-set-rename-editor {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    margin-top: 10px;
+}
+
+.policy-set-rename-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 8px;
+    border: 1px solid #b8b8b8;
+    border-radius: 4px;
+    font: inherit;
+}
+
+.policy-editor-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.policy-editor-actions .save-button {
+    margin-left: 0;
+}
+
+.policy-set-actions {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    vertical-align: middle;
+}
+
+.delete-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #c77d98;
+    color: #fff;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #b56582;
+}
+
+.delete-button:focus-visible {
+    outline: 2px solid #9f4e6b;
+    outline-offset: 2px;
+}
+
+.delete-button:disabled,
+.policy-add-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.config-notice {
+    box-sizing: border-box;
+    margin: 0 0 16px;
+    padding: 12px;
+    border: 1px solid #dfbcc9;
+    border-radius: 8px;
+    background-color: #fbf4f7;
+    color: #633d4c;
+    overflow-wrap: anywhere;
+}
+
+.config-notice p {
+    margin: 0 0 10px;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.config-notice:focus-visible {
+    outline: 2px solid #9f4e6b;
+    outline-offset: 2px;
+}
+
+.config-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 16px;
+    overflow-y: auto;
+    background-color: rgba(17, 36, 48, 0.35);
+}
+
+.config-confirm-dialog {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 360px;
+    max-height: 100%;
+    overflow-y: auto;
+    padding: 20px;
+    border: 1px solid #dce4e9;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 8px 24px rgba(17, 36, 48, 0.2);
+    overflow-wrap: anywhere;
+}
+
+.config-confirm-title {
+    margin: 0 0 10px;
+    color: #203f50;
+    font-size: 16px;
+}
+
+.config-confirm-dialog p {
+    margin: 0 0 16px;
+    line-height: 1.5;
+}
+
+.config-confirm-actions {
+    justify-content: flex-end;
+}
+
+.policy-browser {
+    overflow: hidden;
+}
+
+.policy-browser-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 8px;
+    min-width: 0;
+    padding: 0 0 18px;
+    border-bottom: 0;
+    background-color: transparent;
+}
+
+.policy-browser-label {
+    flex: 0 0 100%;
+    margin: 0;
+    color: #113b51;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.policy-browser-select {
+    flex: 1 1 160px;
+    box-sizing: border-box;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 2px solid #619ecf;
+    border-radius: 5px;
+    background-color: #fff;
+    color: inherit;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.policy-browser-select:focus-visible {
+    outline: 2px solid #0f6cbd;
+    outline-offset: 2px;
+}
+
+.policy-browser-select:disabled {
+    border-color: #d3d3d3;
+    color: #737373;
+}
+
+.change-button.policy-add-button {
+    box-sizing: border-box;
+    width: auto;
+    min-height: 32px;
+    padding: 7px 12px;
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.policy-browser-controls .policy-add-button {
+    flex: 0 0 auto;
+    min-height: 36px;
+    margin-left: auto;
+}
+
+.policy-import-panel {
+    display: grid;
+    gap: 10px;
+    margin: 16px 0;
+    padding: 14px;
+    border: 1px solid #b8cbd7;
+    border-radius: 6px;
+    background: #f5f8fa;
+}
+
+.policy-exchange-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 0 0 20px; border-bottom: 1px solid #dce4e9; }
+.policy-exchange-tools h3 { grid-column: 1 / -1; margin: 0; color: #113b51; font-size: 13px; }
+.policy-exchange-item { min-width: 0; }
+.policy-exchange-item .policy-add-button { width: 100%; min-height: 36px; margin: 0; white-space: normal; }
+.policy-exchange-item p { margin: 7px 0 0; color: #5b6570; font-size: 12px; line-height: 1.5; }
+.policy-exchange-item a { display: inline-block; margin-top: 6px; color: #0f6cbd; font-size: 12px; }
+
+.policy-import-panel h3,
+.policy-import-panel p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.policy-import-panel h3 { font-size: 15px; color: #113b51; }
+.policy-import-panel label { font-weight: 600; font-size: 13px; }
+.policy-file-label { font-weight: 600; font-size: 13px; }
+.policy-file-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+.policy-file-picker button { flex: 0 0 auto; }
+.policy-file-picker span { flex: 1 1 120px; min-width: 0; overflow-wrap: anywhere; color: #5b6570; font-size: 12px; }
+.policy-import-panel input { width: 100%; min-width: 0; box-sizing: border-box; }
+.policy-import-panel a { color: #0f6cbd; overflow-wrap: anywhere; }
+.policy-import-preview-list { max-height: 380px; overflow-y: auto; }
+.policy-import-row { padding: 10px 0; border-bottom: 1px solid #ccd6dc; }
+.policy-import-row h4 { margin: 0 0 6px; }
+.policy-import-row p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.policy-import-row p:last-child { margin-top: 6px; font-size: 12px; color: #5b6570; }
+
+.prompt-settings { display: grid; gap: 16px; padding: 0; font-size: 14px; }
+.prompt-settings p { margin: 0; line-height: 1.55; overflow-wrap: anywhere; }
+.prompt-settings label { font-size: 14px; font-weight: 600; color: #113b51; }
+.prompt-settings textarea {
+    box-sizing: border-box; width: 100%; min-width: 0; padding: 10px;
+    border: 1px solid #b8cbd7; border-radius: 5px; background: #fff; color: #242424;
+}
+.prompt-settings textarea { min-height: 320px; resize: vertical; font: 12px/1.65 Consolas, Menlo, monospace; }
+.prompt-settings textarea:focus-visible { outline: 2px solid #0f6cbd; outline-offset: 2px; }
+.prompt-editor-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.prompt-feature-tabs { display: flex; gap: 3px; margin-top: 0; border-bottom: 1px solid #ccd6dc; }
+.prompt-feature-tabs button {
+    flex: 1; margin: 3px 0 -1px; padding: 8px 6px; border: 1px solid #ccd6dc;
+    border-radius: 5px 5px 0 0; background: #f3f6f8; color: #5b6570; font: inherit; font-size: 13px; cursor: pointer;
+}
+.prompt-feature-tabs button[aria-selected="true"] {
+    margin-top: 0; border-top: 2px solid #96a9b5; border-bottom-color: #fff; background: #fff; color: #113b51; font-weight: 600;
+}
+.prompt-settings button:disabled { opacity: .5; cursor: default; }
+.prompt-editor-panel { display: grid; gap: 12px; padding: 0; }
+.prompt-settings .policy-editor-actions > button { flex: 1 1 110px; }
+.prompt-state { padding: 3px 8px; border-radius: 4px; background: #edf3f7; color: #476477; font-size: 12px; }
+.prompt-settings .prompt-hint { font-size: 12px; color: #5b6570; }
+.prompt-settings .prompt-common-help { margin-top: 6px; padding-top: 12px; border-top: 1px solid #dce4e9; font-size: 12px; color: #5b6570; }
+.prompt-common-help p + p { margin-top: 8px; }
+#prompt-status { font-size: 13px; color: #476477; }
+
+.policy-browser .output-item {
+    margin: 0;
+    padding: 18px 0;
+    border-radius: 0;
+    background: transparent;
+    border-bottom: 1px solid #e4e9ed;
+}
+
+.policy-browser .output-item:last-child {
+    border-bottom: none;
+}
+
+.policy-browser .output-item h4 {
+    margin: 0 0 8px;
+    color: #203f50;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.policy-browser .output-instruction {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.policy-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin: 12px 0;
+    color: #596b76;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.policy-metadata p {
+    margin: 0;
+}
+
+.policy-browser-empty {
+    margin: 0;
+    padding: 20px 0;
+    color: #596b76;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.policy-browser #new-policy-editor {
+    padding: 0 0 16px;
+}
+
+.policy-browser-select:focus-visible,
+.change-button.policy-add-button:focus-visible {
+    outline: 2px solid #45788b;
+    outline-offset: 2px;
+}
+
+#custom-textarea {
+    width: auto; /* Adjust width based on content */
+    max-width: 300px; /* Set a maximum width if needed */
+    height: auto;
+    min-height: 50px; /* Minimum height */
+    overflow-wrap: break-word; /* Handle word wrapping */
+    resize: none; /* Disable manual resizing */
+    overflow-y: hidden; /* Hide vertical scrollbar */
+  }
+
+  #result-container {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.output-item {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.output-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.output-instruction {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.tags-container {
+    margin: 5px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    border: 1px solid #ddd;
+}
+
+.change-button {
+    padding: 5px 10px;
+    background-color: #619ecf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.change-button:hover {
+    background-color: #3e76a1;
+}
+
+.locked-button {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.locked-button:hover {
+    background-color: #cccccc;
+}
+
+.instruction-textarea {
+    width: 100%;
+    height: 100px; /* Adjust height as needed */
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1em;
+    border: 3px solid #347dcf;
+    border-radius: 4px;
+    resize: vertical; /* Allow vertical resizing */
+    box-sizing: border-box;
+}
+
+.save-button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.save-button:hover {
+    background-color: #218838;
+}
+
+.locked-button {
+    background-color: #d3d3d3;
+    color: #7d7d7d;
+    cursor: not-allowed;
+}
+
+.author-name {
+    font-weight:lighter;
+    margin-right: 10px;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto 10px auto; /* Center the spinner */
+  }

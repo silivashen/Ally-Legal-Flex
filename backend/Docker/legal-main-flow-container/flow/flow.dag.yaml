@@ -1,0 +1,194 @@
+$schema: 'https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json'
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  chat_history:
+    type: list
+    is_chat_history: true
+    default: []
+  question:
+    type: string
+    is_chat_input: true
+    default: ''
+  document_text:
+    type: string
+    default: ''
+  document_paragraphs:
+    type: list
+    default: []
+  query_type:
+    type: int
+    default: 2
+  group:
+    type: list
+    default: []
+  policySets:
+    type: list
+    default: []
+  reviewPerspective:
+    type: string
+    default: ''
+  language:
+    type: string
+    default: Chinese
+  filename:
+    type: string
+    default: ''
+outputs:
+  answer:
+    type: string
+    reference: '${aggregation.output}'
+    is_chat_output: true
+nodes:
+  - name: list_policys
+    type: python
+    source:
+      type: code
+      path: list_policys.py
+    inputs:
+      searchconnection: ally
+      input: '${inputs.question}'
+      policySets: '${inputs.policySets}'
+    activate:
+      when: '${inputs.query_type}'
+      is: 0
+  - name: summary_document
+    type: python
+    source:
+      type: code
+      path: summary_document.py
+    inputs:
+      input_text: '${inputs.question}'
+      policy_list: '${list_policys.output}'
+      ally: ally
+      language: '${inputs.language}'
+    activate:
+      when: '${inputs.query_type}'
+      is: 0
+  - name: selection_summary
+    type: python
+    source:
+      type: code
+      path: documen_summary.py
+    inputs:
+      policy_list: '${search_policy.output}'
+      input_text: '${inputs.question}'
+      document_text: '${inputs.document_text}'
+      document_paragraphs: '${inputs.document_paragraphs}'
+      reviewPerspective: '${inputs.reviewPerspective}'
+      ally: ally
+      language: '${inputs.language}'
+    activate:
+      when: '${inputs.query_type}'
+      is: 2
+  - name: search_policy
+    type: python
+    source:
+      type: code
+      path: search_policy.py
+    inputs:
+      searchconnection: ally
+      embeding: '${python_text_embedding_search.output}'
+      query: '${inputs.question}'
+      groups: '${inputs.group}'
+      policySets: '${inputs.policySets}'
+    activate:
+      when: '${inputs.query_type}'
+      is: 2
+  - name: aggregation
+    type: python
+    source:
+      type: code
+      path: aggregation.py
+    inputs:
+      query_type: '${inputs.query_type}'
+      input1: '${selection_summary.output}'
+      input2: '${summary_document.output}'
+      input3: '${summary_full_doc.output}'
+      input4: '${ask_result_format.output}'
+      input5: '${check_index.output}'
+      input6: '${index_contract.output}'
+    aggregation: false
+  - name: summary_full_doc
+    type: python
+    source:
+      type: code
+      path: summary_full_doc.py
+    inputs:
+      input_text: '${inputs.question}'
+      document_text: '${inputs.document_text}'
+      document_paragraphs: '${inputs.document_paragraphs}'
+      reviewPerspective: '${inputs.reviewPerspective}'
+      ally: ally
+      policySets: '${inputs.policySets}'
+      language: '${inputs.language}'
+    activate:
+      when: '${inputs.query_type}'
+      is: 1
+  - name: search_doc
+    type: python
+    source:
+      type: code
+      path: search_doc.py
+    inputs:
+      query: '${inputs.question}'
+      document_text: '${inputs.document_text}'
+      document_paragraphs: '${inputs.document_paragraphs}'
+      filename: '${inputs.filename}'
+      ally: ally
+    activate:
+      when: '${inputs.query_type}'
+      is: 3
+  - name: ask_result_format
+    type: python
+    source:
+      type: code
+      path: ask_result_format.py
+    inputs:
+      query: '${inputs.question}'
+      reviewPerspective: '${inputs.reviewPerspective}'
+      search_result_list: '${search_doc.output}'
+      document_text: '${inputs.document_text}'
+      document_paragraphs: '${inputs.document_paragraphs}'
+      ally: ally
+      language: '${inputs.language}'
+    aggregation: false
+    activate:
+      when: '${inputs.query_type}'
+      is: 3
+  - name: python_text_embedding_search
+    type: python
+    source:
+      type: code
+      path: python_text_embedding.py
+    inputs:
+      ally: ally
+      input: '${inputs.question}'
+      policySets: '${inputs.policySets}'
+    activate:
+      when: '${inputs.query_type}'
+      is: 2
+  - name: index_contract
+    type: python
+    source:
+      type: code
+      path: index_contract.py
+    inputs:
+      filename: '${inputs.filename}'
+      document_text: '${inputs.document_text}'
+      document_paragraphs: '${inputs.document_paragraphs}'
+    activate:
+      when: '${inputs.query_type}'
+      is: 98
+  - name: check_index
+    type: python
+    source:
+      type: code
+      path: check_index.py
+    inputs:
+      filename: '${inputs.filename}'
+      document_text: '${inputs.document_text}'
+      document_paragraphs: '${inputs.document_paragraphs}'
+    activate:
+      when: '${inputs.query_type}'
+      is: 99

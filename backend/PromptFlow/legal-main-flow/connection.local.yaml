@@ -1,0 +1,9 @@
+# Local-only connection required by flow.dag.yaml.
+# Model credentials are configured in Word: Config > Model Settings.
+# This placeholder is not an API key. Do not replace it with real credentials.
+name: ally
+type: custom
+configs:
+  mode: local
+secrets:
+  placeholder: local-only

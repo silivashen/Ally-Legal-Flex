@@ -1,0 +1,45 @@
+<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ally Legal Flex — Configuration</title>
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
+    <link href="configpane.css" rel="stylesheet" type="text/css" />
+    <link href="../shared/model-settings.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="ms-font-m ms-welcome ms-Fabric">
+    <header class="config-header">
+        <h1>Configuration</h1>
+        <p>Policies, models and review instructions.</p>
+    </header>
+    <section id="sideload-msg" class="ms-welcome__main" style="display: none;">
+        <p>Open this add-in in Word to configure Ally Legal Flex.</p>
+    </section>
+    <main id="app-body" class="ms-welcome__main config-main" style="display: none;">
+        <div class="config-tabs" role="tablist" aria-label="Configuration sections">
+            <button type="button" id="config-tab-policies" role="tab"
+                    aria-controls="config-panel-policies" aria-selected="true">Company Policies</button>
+            <button type="button" id="config-tab-models" role="tab" tabindex="-1"
+                    aria-controls="config-panel-models" aria-selected="false">Model Settings</button>
+            <button type="button" id="config-tab-prompts" role="tab" tabindex="-1"
+                    aria-controls="config-panel-prompts" aria-selected="false">Prompt Settings</button>
+        </div>
+        <section id="config-panel-policies" class="config-panel" role="tabpanel"
+                 aria-labelledby="config-tab-policies" tabindex="0">
+            <div id="policy-container" class="container" aria-live="polite"></div>
+        </section>
+        <section id="config-panel-models" class="config-panel" role="tabpanel"
+                 aria-labelledby="config-tab-models" tabindex="0" hidden>
+            <div id="model-settings-container"></div>
+        </section>
+        <section id="config-panel-prompts" class="config-panel" role="tabpanel"
+                 aria-labelledby="config-tab-prompts" tabindex="0" hidden>
+            <div id="prompt-settings-container"></div>
+        </section>
+    </main>
+</body>
+</html>

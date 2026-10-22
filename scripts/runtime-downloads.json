@@ -1,0 +1,37 @@
+{
+  "uv_version": "0.13.4",
+  "node_version": "v22.23.4",
+  "python_version": "3.11",
+  "platforms": {
+    "mac-arm64": {
+      "uv": {
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.4/uv-aarch64-apple-darwin.tar.gz",
+        "sha256": "e0b1d4743ce64c55d9f0f4a444afa6b81125680070ee04e853fcd0f6c1ebf8f1"
+      },
+      "node": {
+        "url": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-darwin-arm64.tar.gz",
+        "sha256": "c9e1dbc748b33ed2d14f42445191ecaf14c56259c7a9a26d0042c49ec2b66428"
+      }
+    },
+    "mac-x64": {
+      "uv": {
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.4/uv-x86_64-apple-darwin.tar.gz",
+        "sha256": "7be2dcd316122f4b3e5a0a7889f6248266c14425374e105ff7dc9779184603a6"
+      },
+      "node": {
+        "url": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-darwin-x64.tar.gz",
+        "sha256": "efcc2b0db6f94bf53eddb038fe2b370277a042bd29e4f19b8f8e23598795b819"
+      }
+    },
+    "windows-x64": {
+      "uv": {
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.4/uv-x86_64-pc-windows-msvc.zip",
+        "sha256": "ccec7508a07d9933d7cb1261880633efcf1f30d6e6eddab21823f1dae6f23225"
+      },
+      "node": {
+        "url": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-win-x64.zip",
+        "sha256": "cbc74b5e0982c9dbb41525fd8fb5dcd32fbee237863f7829072f4639a1ce5f20"
+      }
+    }
+  }
+}

@@ -1,0 +1,306 @@
+// Description: This file contains the code to run the task pane add-in.
+// Dependencies: This file depends on the following files:
+//   1. src/taskpane/taskpane.css
+
+import { ask } from './Containers/aks.js'; 
+import { summary } from './Containers/summary_selected.js';
+import { document_summary } from './Containers/summary_document.js';
+import './Containers/policy_sets_review.js';
+import { resolveLocalEndpoint } from '../shared/local-endpoint.js';
+
+import { createNestablePublicClientApplication } from "@azure/msal-browser";
+
+let pca = undefined;
+
+const configPromise = fetch("assets/config.json")
+  .then((res) => {
+    if (!res.ok) {
+      throw new Error(
+        `Cannot load assets/config.json: ${res.status}`
+      );
+    }
+    return res.json();
+  })
+  .then((config) => {
+    console.log("Loaded Ally config:", config);
+
+    localStorage.setItem(
+      "pfendpoint",
+      resolveLocalEndpoint(localStorage.getItem("pfendpoint") || config["prompt-flow-endpoint"] || "/local-api/flow/score")
+    );
+
+    localStorage.setItem(
+      "pfconfigendpoint",
+      config["config-prompt-flow-endpoint"] || ""
+    );
+
+    localStorage.setItem("clientId", config["clientId"] || "");
+    localStorage.setItem("authority", config["authority"] || "");
+    localStorage.setItem(
+      "sso-enabled",
+      String(config["sso-enabled"])
+    );
+
+    return config;
+  });
+Office.onReady(async (info) => {
+  try {
+    await configPromise;
+  } catch (error) {
+    console.error("Failed to load Ally config:", error);
+    showErrorMessage(
+      "Failed to load configuration: " + error.message
+    );
+    return;
+  }
+
+  if (info.host === Office.HostType.Word) {
+    
+    
+    
+  if (localStorage.getItem('sso-enabled') == "true"){
+    pca = await createNestablePublicClientApplication({
+      auth: {
+        clientId: localStorage.getItem('clientId'),
+        authority: localStorage.getItem('authority'),
+      },
+    });
+  }
+
+    getOpenAIResponseDemo().then((result) =>
+    {
+      console.log("Result: ", result);
+      if (result != null) {
+        setTimeout(() => {          
+          document.getElementById("sideload-msg").style.display = "none";
+          document.getElementById("app-body").style.display = "flex";
+        document.getElementById("ask-button").onclick = () => {
+    console.log("Answer button clicked");
+    ask();
+};
+          document.getElementById("fetchPolicyData").onclick = () => {
+    console.log("Review button clicked");
+    summary();
+};
+          document.getElementById("fetchSummaryData").onclick = document_summary;
+          document.getElementById("reset-button").onclick = reset_cache;
+        }, 1000);
+      }
+      else
+      {
+        showErrorMessage("An unexpected error occurred: " + result);
+      }
+    }).catch((error) => {
+      console.error("Error messgae: " + error);
+      showErrorMessage(error);
+    })
+    
+  }
+});
+
+async function sso() {
+  // Specify minimum scopes needed for the access token.
+  const tokenRequest = {
+    scopes: ["User.Read", "openid", "profile"],
+  };
+  let accessToken = null;
+
+  try {
+    console.log("Trying to acquire token silently...");
+    const userAccount = await pca.acquireTokenSilent(tokenRequest);
+    console.log("Acquired token silently.");
+    accessToken = userAccount.accessToken;
+  } catch (error) {
+    console.log(`Unable to acquire token silently: ${error}`);
+  }
+
+  if (accessToken === null) {
+    // Acquire token silent failure. Send an interactive request via popup.
+    try {
+      console.log("Trying to acquire token interactively...");
+      const userAccount = await pca.acquireTokenPopup(tokenRequest);
+      console.log("Acquired token interactively.");
+      accessToken = userAccount.accessToken;
+    } catch (popupError) {
+      // Acquire token interactive failure.
+      console.log(`Unable to acquire token interactively: ${popupError}`);
+    }
+  }
+
+  // Log error if both silent and popup requests failed.
+  if (accessToken === null) {
+    console.error(`Unable to acquire access token.`);
+    return;
+  }
+
+  // Call the Microsoft Graph API with the access token.
+  const response = await fetch(
+    `https://graph.microsoft.com/v1.0/me/memberOf?$select=displayName,id,description,mail,mailNickName,userPrincipalName`,
+    {
+      headers: { Authorization: accessToken },
+    }
+  );
+
+  const response_profile = await fetch(
+    `https://graph.microsoft.com/v1.0/me`,
+    {
+      headers: { Authorization: accessToken },
+    }
+  );
+
+
+  if (response.ok && response_profile.ok) {
+    // Write file names to the console.
+    const me = await response_profile.json();
+    // save to global variable for later use
+    localStorage.setItem('profile', JSON.stringify(me));
+    console.log("Profile: ", me);
+
+    const data = await response.json();
+    const groups = data.value.map((item) => item.id);
+    localStorage.setItem('groups', JSON.stringify(groups));
+    console.log("Groups: ", groups);
+  }
+
+  }
+
+function showErrorMessage(message) {
+  const sideloadMsg = document.getElementById("sideload-msg");
+
+  // Update the content of the sideload message
+  sideloadMsg.innerHTML = `<h1>There  been a connection check error</h1><p>The following error occurred: </p><p>${message}</p>`;
+
+  // Style the error message
+  sideloadMsg.style.display = "block";
+  sideloadMsg.style.backgroundColor = "#ffffff";
+  sideloadMsg.style.padding = "10px";
+  sideloadMsg.style.border = "1px solid #f5c6cb";
+  sideloadMsg.style.borderRadius = "5px";
+
+  // hide after 5 seconds
+  setTimeout(() => {
+    sideloadMsg.style.display = "none";
+  }, 5000);
+
+}
+
+
+export async function reset_cache() {
+  localStorage.removeItem('FullSummaryData');
+  localStorage.removeItem('groups');
+  localStorage.removeItem('profile');
+  showSuccessMessage("Cache has been reset successfully");
+}
+
+
+// Function to display a success message on the top ribbon
+function showSuccessMessage(message) {
+  const ribbon = document.querySelector('.warning-ribbon');
+  const ribbonText = document.getElementById('ribbon-text');
+
+  ribbonText.textContent = message;
+
+  ribbon.style.display = "block";
+  ribbon.classList.add("fade-in");
+  ribbon.classList.remove("fade-out");
+  setTimeout(() => {
+    ribbon.classList.remove("fade-in");
+    ribbon.classList.add("fade-out");
+  }, 2000); 
+  setTimeout(() => {
+    ribbon.style.display = "none";
+  }, 3000); 
+  
+}
+
+async function getOpenAIResponseDemo()
+{
+  // run sso function to get the profile and groups is SSO is enabled else use the demo profile and groups
+  if ((localStorage.getItem('profile') == null || localStorage.getItem('groups') == null) || localStorage.getItem('sso-enabled') == "true")
+    {
+      try {
+        if (localStorage.getItem('sso-enabled') == "true"){
+          console.log("SSO enabled");
+          await sso();
+        }
+        else
+        {
+          console.log("SSO not enabled");
+          const profile = JSON.stringify(
+          {
+            "businessPhones": [],
+            displayName: "Ally Legal",
+            "givenName": "John",
+            "jobTitle": "Legal professional",
+            "mail": "jhon.doe@microsoft.com",
+            "mobilePhone": null,
+            "officeLocation": "",
+            "preferredLanguage": null,
+            "surname": "Doe",
+            "userPrincipalName": "john.doe@microsoft.com",
+            "id": "877e9802-b713-4250-8701-c70d2c1e9a42"
+        })
+          console.log("Profile: ", profile);
+          localStorage.setItem('profile', profile);
+          
+          //localStorage.setItem('groups',['2846190d-05dc-4048-90bc-7e236f34d84b','62edbd7b-8d46-4d2c-a5a1-da5b78ba1d38','be8ca378-bc74-46c1-b922-e7f552486ede']);
+          localStorage.setItem('groups', JSON.stringify(['22a229bd-c7a2-49d0-9eaa-e1fc888daac6','2846190d-05dc-4048-90bc-7e236f34d84b','62edbd7b-8d46-4d2c-a5a1-da5b78ba1d38','be8ca378-bc74-46c1-b922-e7f552486ede']));
+
+          //localStorage.setItem('groups', JSON.stringify(['22a229bd-c7a2-49d0-9eaa-e1fc888daac6']));
+
+          console.log("Profile: ", JSON.parse(localStorage.getItem('profile')));
+          console.log("Groups: ", localStorage.getItem('groups'));
+        }
+      }
+      catch (error) {
+        return error;
+      }
+    }
+    else
+    {
+      console.log("Profile already exists");
+      console.log("Profile: ", JSON.parse(localStorage.getItem('profile')));
+      console.log("Groups: ", localStorage.getItem('groups'));
+      
+      
+    }
+  
+  
+  return "Success";
+}
+
+// action on change of language-select
+var languageSelect = document.getElementById("language-select");
+if (languageSelect) {
+    var defaultApplied = localStorage.getItem("ally-language-default-cn-v1");
+
+    if (defaultApplied !== "true") {
+        languageSelect.value = "Chinese";
+        localStorage.setItem("language", "Chinese");
+        localStorage.setItem("ally-language-default-cn-v1", "true");
+    } else {
+        var savedLanguage = localStorage.getItem("language");
+        var validLanguage = false;
+
+        for (var i = 0; i < languageSelect.options.length; i++) {
+            if (languageSelect.options[i].value === savedLanguage) {
+                validLanguage = true;
+                break;
+            }
+        }
+
+        if (validLanguage) {
+            languageSelect.value = savedLanguage;
+        } else {
+            languageSelect.value = "Chinese";
+            localStorage.setItem("language", "Chinese");
+        }
+    }
+
+    languageSelect.onchange = function() {
+        var lang = languageSelect.value;
+        localStorage.setItem("language", lang);
+        console.log("Language: ", lang);
+    };
+}
+

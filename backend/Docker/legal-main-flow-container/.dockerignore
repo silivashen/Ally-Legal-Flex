@@ -1,0 +1,16 @@
+# Send only runtime source files to the Docker builder.
+# Model keys and policies are mounted at runtime, never baked into the image.
+**
+!Dockerfile
+!.dockerignore
+!start.sh
+!runit/
+!runit/promptflow-serve/
+!runit/promptflow-serve/run
+!runit/promptflow-serve/finish
+!connections/
+!connections/ally.yaml
+!flow/
+!flow/requirements.txt
+!flow/flow.dag.yaml
+!flow/*.py

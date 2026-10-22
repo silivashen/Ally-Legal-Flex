@@ -1,0 +1,6 @@
+name: ally
+type: custom
+configs:
+  mode: frontend-local
+secrets:
+  local_placeholder: unused-local

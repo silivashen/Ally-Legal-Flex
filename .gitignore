@@ -1,0 +1,69 @@
+node_modules
+doc
+files/*.ps1
+files/*.py
+model_config.json
+model_config.json.*
+prompt_settings.json
+prompt_settings_*.tmp
+connection.yaml.txt
+
+.venv-mac/
+.ally-vector-cache/
+.ally-contract-index/
+.ally-run/
+.ally-tools/
+
+# Release packaging output and local audit scratch space
+/dist-release/
+/release/
+.audit-tmp/
+
+# Local edit backups and one-off migration artifacts
+*.bak*
+*.before*
+*.backup*
+*.repair_backup*
+*.orig
+*.rej
+*~
+backup_*/
+/apply_embedding_patch.py
+/node_modules.7z
+
+# Rebuildable dependencies, build output, and development caches
+venv/
+.venv*/
+dist/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+.DS_Store
+~$*
+
+# Private local settings, policies, and document-derived data
+.env*
+!.env.example
+contract_index.json
+policy.json
+policy_sets.json
+local_*_embeddings.json
+local_*_data.json
+local_bge_m3_policy.json
+/data.json
+**/.promptflow/*
+!**/.promptflow/flow.tools.json
+!**/.promptflow/flow.uihint.json
+!**/.promptflow/flow.layout.json
+
+# Machine-specific settings and editor lock files
+.azureml/
+.vscode/
+.~lock.*
+
+# This source release intentionally includes the public test policy library.
+!/policy.json
+!/policy_sets.json

@@ -1,0 +1,80 @@
+// Review policy-set selector.
+// Keeps policy sets separate from permission groups ("groups").
+
+async function initializePolicySetSelector() {
+    const options = document.getElementById("policy-set-options");
+    const errorBox = document.getElementById("policy-set-error");
+
+    if (!options) return;
+
+    try {
+        const response = await fetch("http://127.0.0.1:8084/policy-sets");
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const data = await response.json();
+        const policySets = Array.isArray(data.policySets)
+            ? data.policySets
+            : [];
+
+        if (policySets.length === 0) {
+            throw new Error("No policy sets were returned by the server.");
+        }
+
+        options.replaceChildren();
+
+        policySets.forEach((name, index) => {
+            const label = document.createElement("label");
+            label.style.display = "block";
+            label.style.marginBottom = "6px";
+            label.style.cursor = "pointer";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.value = name;
+            checkbox.dataset.policySet = name;
+
+            // General Policies is checked by default.
+            checkbox.checked = false;
+            checkbox.style.marginRight = "8px";
+
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(name));
+            options.appendChild(label);
+        });
+
+        if (errorBox) {
+            errorBox.style.display = "none";
+            errorBox.textContent = "";
+        }
+
+        window.getSelectedPolicySets = function () {
+            return Array.from(
+                options.querySelectorAll(
+                    'input[type="checkbox"][data-policy-set]:checked'
+                )
+            ).map(input => input.value);
+        };
+
+        console.log("[Policy Sets] Selector loaded:", policySets);
+    } catch (error) {
+        console.error("[Policy Sets] Failed to load:", error);
+        options.textContent = "Could not load policy sets.";
+
+        if (errorBox) {
+            errorBox.textContent =
+                "Please confirm the local service at " +
+                "http://127.0.0.1:8084 is running, then refresh this pane.";
+            errorBox.style.display = "block";
+        }
+
+        // Fail closed: do not silently review under a guessed policy set.
+        window.getSelectedPolicySets = function () {
+            return [];
+        };
+    }
+}
+
+initializePolicySetSelector();

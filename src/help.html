@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ally Legal Flex — Help</title>
+    <style>
+      body { margin: 0; padding: 32px 20px; font: 16px/1.6 system-ui, sans-serif; color: #242424; background: #f6f7f9; }
+      main { max-width: 680px; margin: auto; padding: 28px; background: #fff; border: 1px solid #e1e4e8; border-radius: 12px; }
+      h1 { margin-top: 0; font-size: 28px; }
+      h2 { margin-top: 28px; font-size: 20px; }
+      a { color: #155f9d; text-underline-offset: 3px; }
+      .version { color: #62676d; }
+      blockquote { margin: 16px 0; padding-left: 16px; border-left: 3px solid #d1d7de; }
+      code { overflow-wrap: anywhere; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Ally Legal Flex</h1>
+      <p class="version">Version 1.0.0 · Maintained by Silvia Shen</p>
+      <p>Review contracts in Word using your configured chat and embedding models and locally managed policy sets.</p>
+      <h2>Getting started</h2>
+      <ol>
+        <li>In Word, open <strong>Config → Model Settings</strong> to configure and test your models.</li>
+        <li>Use <strong>Config → Company Policies</strong> to manage review rules and import or download policies with Excel.</li>
+        <li>Use <strong>Config → Prompt Settings</strong> to edit the core prompts for Ask, Summary and Review, or restore their built-in instructions.</li>
+        <li>Open <strong>Ally Legal Flex</strong>, choose the answer language, review perspective and policy sets, then use Summary, Ask or Review.</li>
+      </ol>
+      <p><a href="configpane.html">Open Config</a> · <a href="taskpane.html">Open the task pane</a></p>
+      <p>Document features require the add-in to be opened in Word. The <a href="USER_GUIDE.zh-CN.md" download>中文使用手册</a> is also included in the project at <code>USER_GUIDE.zh-CN.md</code>.</p>
+      <h2>Project source</h2>
+      <p>Based on Microsoft's Azure Samples project <a href="https://github.com/Azure-Samples/ally-legal-assistant">Ally – AI Contract Assistant</a>, by Esther Dediashvili, Lior Armiev and Andrew Mackay. Ally Legal Flex adds configurable models, local policy sets, review perspectives and revised policy citations.</p>
+      <p>The upstream project's rights statement is preserved here:</p>
+      <blockquote>This plugin is free to use and modify by anyone. The GitHub repository is also free to use and change.</blockquote>
+      <p>Ally Legal Flex retains the MIT declaration in the <a href="https://github.com/Azure-Samples/ally-legal-assistant/blob/main/package.json">upstream package.json</a> and existing copyright and license notices. See the included user guide for the source and licensing details. Third-party dependencies retain their own licenses.</p>
+      <h2>Feedback</h2>
+      <p>Contact the maintainer of the repository from which you downloaded Ally Legal Flex. A project support link will be added once its publication address is confirmed.</p>
+    </main>
+  </body>
+</html>

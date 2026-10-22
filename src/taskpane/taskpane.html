@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ally Legal Flex</title>
+
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    
+  
+
+
+
+
+    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css"/>
+
+    <!-- Template styles -->
+    <link href="taskpane.css" rel="stylesheet" type="text/css" />
+    
+</head>
+
+<body class="ms-font-m ms-welcome ms-Fabric">
+
+    <div class="warning-ribbon" style="display: none;">
+        <span id="ribbon-text"></span>
+      </div>
+    
+    <section id="sideload-msg" class="ms-welcome__main" style="display: none;">
+        <div class="spinner"></div><h1 style="text-align: center;">Checking AI configuration, please wait...</h1>
+    </section>
+        
+    <main id="app-body" class="ms-welcome__main" style="display: none;">
+        <!-- title with icon icon.png on the left and h1 titile on the right side -->
+        <div class="flex-container"  >
+            <div style="align-content: center;"><img src="../../assets/icon-80.ico" alt="GBB" title="GBB"/></div>
+            <div><h1 class="ms-font-xxl ms-fontWeight-semilight">Ally Legal Flex</h1></div>
+        </div>
+        <ul class="ms-List ms-welcome__features">
+            <li class="ms-ListItem">
+                <i class="ms-Icon ms-Icon--Ribbon ms-font-xl"></i>
+                <span class="ms-font-m"><strong>Summary</strong> — Summarize key clauses and flag potential risks.</span>
+            </li>
+            <li class="ms-ListItem">
+                <i class="ms-Icon ms-Icon--Unlock ms-font-xl"></i>
+                <span class="ms-font-m"><strong>Ask</strong> — Ask questions about your contract with references to relevant clauses.</span>
+            </li>
+            <li class="ms-ListItem">
+                <i class="ms-Icon ms-Icon--Design ms-font-xl"></i>
+                <span class="ms-font-m"><strong>Review &amp; Mark-up</strong> — Review selected clauses against your chosen policies and suggest edits.</span>
+            </li>
+        </ul>
+
+
+
+        <div id="demo-container" class="container general-settings" aria-labelledby="general-settings-title">
+            <h2 id="general-settings-title">General Settings</h2>
+            <div class="general-setting-field">
+                <label for="language-select" class="general-setting-label">Answer Language</label>
+                <p id="language-hint" class="general-setting-hint">Choose the language for AI responses.</p>
+                <select id="language-select" class="search-input" aria-describedby="language-hint">
+                    <option value="English">English</option>
+                    <option value="Chinese" selected>Chinese（中文）</option>
+                    <option value="Greek">Greek</option>
+                    <option value="Russian">Russian</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="German">German</option>
+                    <option value="French">French</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Dutch">Dutch</option>
+                    <option value="Portuguese">Portuguese</option>
+                    <option value="Danish">Danish</option>
+                    <option value="Finnish">Finnish</option>
+                    <option value="Norwegian">Norwegian</option>
+                    <option value="Polish">Polish</option>
+                    <option value="Czech">Czech</option>
+                    <option value="Swedish">Swedish</option>
+                    <option value="Turkish">Turkish</option>
+                </select>
+            </div>
+            <div id="review-perspective-container" class="general-setting-field">
+                <h3 id="review-perspective-title" class="general-setting-label">Review Perspective</h3>
+                <p id="review-perspective-hint" class="general-setting-hint">Match the parties you represent to the names or roles in your policies.</p>
+                <div class="mapping-column-headings" aria-hidden="true">
+                    <span>Contract party</span><span></span><span>Policy party</span><span></span>
+                </div>
+                <div id="perspective-mappings" role="group" aria-labelledby="review-perspective-title" aria-describedby="review-perspective-hint perspective-neutral-hint review-perspective-error"></div>
+                <button id="add-mapping" class="add-mapping-button" type="button"><span aria-hidden="true">＋</span> Add mapping</button>
+                <p id="perspective-neutral-hint" class="general-setting-hint neutral-hint">Leave blank for a neutral review.</p>
+                <p id="review-perspective-error" class="perspective-error" role="alert"></p>
+                <p id="mapping-status" class="perspective-sr-only" role="status" aria-live="polite"></p>
+            </div>
+            <div id="policy-set-container" class="general-setting-field">
+                <h3 id="policy-set-title" class="general-setting-label">Policy Set</h3>
+                <p class="general-setting-hint">Select the policies to use for Summary and Review.</p>
+                <div id="policy-set-selector" role="group" aria-labelledby="policy-set-title">
+                    <div id="policy-set-options">Loading policy sets...</div>
+                    <div id="policy-set-error" role="alert"
+                         style="display: none; color: #a4262c; margin-top: 6px;"></div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div id="summary-container" class="container">
+            <h2>Summary</h2>
+            <p>Summarize the document to get a quick overview of the key clauses and provisions</p>
+            <div id="summary-spinner" style="display: none;" class="spinner"></div>
+            <button class="ms-Button ms-Button--primary search-button" id="fetchSummaryData">
+                <span class="ms-Button-label">Summarize Document</span>
+            </button>
+            <div id="summary-content"></div> <!-- This will hold the dynamic content -->
+        </div>
+        
+        <br>
+
+        <!--- Ask Button -->
+        <div class="container" id="ask-container">
+            <h2>Ask</h2>
+            <p>Ask questions about the current Word document.</p>
+            <div id="ask-spinner" style="display: none;" class="spinner"></div>
+            <input type="text" class="search-input" id="ask-input" name="search" placeholder="Write your question">
+            <button class="ms-Button ms-Button--primary search-button" id="ask-button">
+                <span class="ms-Button-label">Ask on the contract</span>
+            </button>
+        </div>
+        <br>
+
+
+
+
+        <div id="policy-container" class="container">
+            <h2>Review & Mark-up</h2>
+            <p>Make a risk assessment of key contract clauses compared to your organizational standard. </p>
+            <p>This button will review the document based on organizational standard</p>
+            <p>and will suggest mark-up for the clause.</p>
+                <div id="policy-results"></div>
+<button class="ms-Button ms-Button--primary search-button" id="fetchPolicyData">
+    <span class="ms-Button-label">Review</span>
+</button>            
+        </div>
+        <br>
+        <section class="cache-tools" aria-label="Cache tools">
+            <p id="cache-description">Clear temporary summary and user information caches.</p>
+            <button class="ms-Button search-button" id="reset-button" type="button" aria-describedby="cache-description">
+                <span class="ms-Button-label">Clear Cache</span>
+            </button>
+        </section>
+        <p class="model-settings-note">Model settings are available in Config.</p>
+</main>
+</body>
+
+</html>
+<!-- <script type="text/javascript">
+    var ButtonElements = document.querySelectorAll(".ms-Button");
+  </script> -->
+

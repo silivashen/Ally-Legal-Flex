@@ -1,0 +1,9 @@
+{
+  "provider": "OpenAI-compatible",
+  "base_url": "",
+  "model": "",
+  "api_key": "",
+  "embedding_base_url": "",
+  "embedding_model": "",
+  "embedding_key": ""
+}

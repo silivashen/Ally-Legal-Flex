@@ -1,0 +1,79 @@
+[
+  {
+    "id": 2,
+    "title": "赔偿责任限额",
+    "instruction": "卖方在本合同项下的累计赔偿责任不得超过合同总价款。",
+    "tags": [
+      "Liability"
+    ],
+    "severity": 1,
+    "groups": [],
+    "policySet": "销售合同审核规则（公司为卖方）"
+  },
+  {
+    "id": 5,
+    "title": "预付款",
+    "instruction": "买方应当在卖方发货前预付合同总价款的 80%。",
+    "tags": [
+      "Payment"
+    ],
+    "severity": 1,
+    "groups": [
+      "All"
+    ],
+    "policySet": "销售合同审核规则（公司为卖方）"
+  },
+  {
+    "id": 6,
+    "title": "管辖法院",
+    "instruction": "本合同应由卖方所在地有管辖权的人民法院管辖。",
+    "tags": [
+      "Jurisdiction"
+    ],
+    "severity": 2,
+    "groups": [
+      "All"
+    ],
+    "policySet": "销售合同审核规则（公司为卖方）"
+  },
+  {
+    "id": 3,
+    "title": "付款",
+    "instruction": "买方在货物或服务验收合格前预付的累计款项不得超过合同总价款的 50%。",
+    "tags": [
+      "Payment"
+    ],
+    "severity": 2,
+    "groups": [
+      "All"
+    ],
+    "policySet": "采购合同审核规则（公司为买方）"
+  },
+  {
+    "id": 7,
+    "title": "迟延付款违约责任",
+    "instruction": "买方迟延付款的违约金每日不得超过万分之三，累计不得超过本合同总价款的 5%。",
+    "tags": [
+      "Payment",
+      "Late Payment"
+    ],
+    "severity": 2,
+    "groups": [
+      "All"
+    ],
+    "policySet": "采购合同审核规则（公司为买方）"
+  },
+  {
+    "id": 8,
+    "title": "管辖法院",
+    "instruction": "本合同应由买方所在地有管辖权的法院管辖。",
+    "tags": [
+      "Jurisdiction"
+    ],
+    "severity": 2,
+    "groups": [
+      "All"
+    ],
+    "policySet": "采购合同审核规则（公司为买方）"
+  }
+]

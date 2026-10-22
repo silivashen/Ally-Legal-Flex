@@ -1,0 +1,344 @@
+{
+    "package": {},
+    "code": {
+        "list_policys.py": {
+            "type": "python",
+            "inputs": {
+                "input": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "searchconnection": {
+                    "type": [
+                        "CustomConnection"
+                    ]
+                },
+                "policySets": {
+                    "type": [
+                        "list"
+                    ]
+                }
+            },
+            "source": "list_policys.py",
+            "function": "list_policy_tool"
+        },
+        "summary_document.py": {
+            "type": "python",
+            "inputs": {
+                "input_text": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "policy_list": {
+                    "type": [
+                        "list"
+                    ]
+                },
+                "ally": {
+                    "type": [
+                        "CustomConnection"
+                    ]
+                },
+                "language": {
+                    "type": [
+                        "string"
+                    ]
+                }
+            },
+            "source": "summary_document.py",
+            "function": "python_tool"
+        },
+        "documen_summary.py": {
+            "type": "python",
+            "inputs": {
+                "language": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "input_text": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "policy_list": {
+                    "type": [
+                        "object"
+                    ]
+                },
+                "ally": {
+                    "type": [
+                        "CustomConnection"
+                    ]
+                },
+                "reviewPerspective": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "document_text": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "document_paragraphs": {
+                    "type": [
+                        "list"
+                    ]
+                }
+            },
+            "source": "documen_summary.py",
+            "function": "python_tool"
+        },
+        "search_policy.py": {
+            "type": "python",
+            "inputs": {
+                "query": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "embeding": {
+                    "type": [
+                        "list"
+                    ]
+                },
+                "searchconnection": {
+                    "type": [
+                        "CustomConnection"
+                    ]
+                },
+                "groups": {
+                    "type": [
+                        "list"
+                    ]
+                },
+                "policySets": {
+                    "type": [
+                        "list"
+                    ]
+                }
+            },
+            "source": "search_policy.py",
+            "function": "list_policy_tool"
+        },
+        "aggregation.py": {
+            "type": "python",
+            "inputs": {
+                "query_type": {
+                    "type": [
+                        "int"
+                    ]
+                },
+                "input1": {
+                    "type": [
+                        "object"
+                    ]
+                },
+                "input2": {
+                    "type": [
+                        "object"
+                    ]
+                },
+                "input3": {
+                    "type": [
+                        "object"
+                    ]
+                },
+                "input4": {
+                    "type": [
+                        "object"
+                    ]
+                },
+                "input5": {
+                    "type": [
+                        "object"
+                    ]
+                },
+                "input6": {
+                    "type": [
+                        "object"
+                    ]
+                }
+            },
+            "description": "Return only the branch requested by the caller, never another result.",
+            "source": "aggregation.py",
+            "function": "my_python_tool"
+        },
+        "summary_full_doc.py": {
+            "type": "python",
+            "inputs": {
+                "input_text": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "ally": {
+                    "type": [
+                        "CustomConnection"
+                    ]
+                },
+                "policySets": {
+                    "type": [
+                        "list"
+                    ]
+                },
+                "language": {
+                    "type": [
+                        "string"
+                    ],
+                    "default": "Chinese"
+                },
+                "reviewPerspective": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "document_paragraphs": {
+                    "type": [
+                        "list"
+                    ]
+                },
+                "document_text": {
+                    "type": [
+                        "string"
+                    ]
+                }
+            },
+            "source": "summary_full_doc.py",
+            "function": "python_tool"
+        },
+        "search_doc.py": {
+            "type": "python",
+            "inputs": {
+                "query": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "document_text": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "ally": {
+                    "type": [
+                        "CustomConnection"
+                    ]
+                },
+                "document_paragraphs": {
+                    "type": [
+                        "list"
+                    ]
+                },
+                "filename": {
+                    "type": [
+                        "string"
+                    ]
+                }
+            },
+            "source": "search_doc.py",
+            "function": "search_doc_tool"
+        },
+        "ask_result_format.py": {
+            "type": "python",
+            "inputs": {
+                "query": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "search_result_list": {
+                    "type": [
+                        "list"
+                    ]
+                },
+                "document_text": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "ally": {
+                    "type": [
+                        "CustomConnection"
+                    ]
+                },
+                "language": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "reviewPerspective": {
+                    "type": [
+                        "string"
+                    ]
+                }
+            },
+            "source": "ask_result_format.py",
+            "function": "python_tool"
+        },
+        "python_text_embedding.py": {
+            "type": "python",
+            "inputs": {
+                "input": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "ally": {
+                    "type": [
+                        "CustomConnection"
+                    ]
+                }
+            },
+            "source": "python_text_embedding.py",
+            "function": "my_python_tool"
+        },
+        "index_contract.py": {
+            "type": "python",
+            "inputs": {
+                "filename": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "document_text": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "document_paragraphs": {
+                    "type": [
+                        "list"
+                    ]
+                }
+            },
+            "source": "index_contract.py",
+            "function": "my_python_tool"
+        },
+        "check_index.py": {
+            "type": "python",
+            "inputs": {
+                "filename": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "document_text": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "document_paragraphs": {
+                    "type": [
+                        "list"
+                    ]
+                }
+            },
+            "source": "check_index.py",
+            "function": "my_python_tool"
+        }
+    }
+}

@@ -1,0 +1,37 @@
+# Canonical line endings: LF everywhere, except Windows-only launchers.
+# Keep this file identical in the source tree and in release packages.
+* text=auto eol=lf
+
+# Batch files must be CRLF or cmd.exe misparses them.
+*.cmd       text eol=crlf
+*.bat       text eol=crlf
+*.ps1       text eol=crlf
+
+# Bash launchers and shebang scripts require LF, or macOS reports
+# "bad interpreter: /bin/bash^M".
+*.command   text eol=lf
+*.sh        text eol=lf
+*.py        text eol=lf
+*.js        text eol=lf
+*.cjs       text eol=lf
+*.json      text eol=lf
+*.md        text eol=lf
+*.yaml      text eol=lf
+*.yml       text eol=lf
+*.jinja2    text eol=lf
+*.txt       text eol=lf
+*.html      text eol=lf
+*.css       text eol=lf
+*.xml       text eol=lf
+
+# Third-party license texts are retained byte-for-byte.
+docs/licenses/** -text
+
+# Office documents and images must never be line-ending converted.
+*.docx      binary
+*.xlsx      binary
+*.pptx      binary
+*.png       binary
+*.jpg       binary
+*.ico       binary
+*.drawio    binary

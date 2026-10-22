@@ -1,0 +1,43 @@
+Ally Legal Flex 1.0.0 — Windows / Mac
+
+首次安装（需要联网）
+1. 完整解压到固定、可写的文件夹。不要在压缩包里直接运行。
+   Windows 建议使用较短的路径，例如 D:\AllyLegal。
+2. Windows Intel/AMD 64 位：双击 Setup-Ally.cmd。
+   Mac Apple Silicon / Intel：双击 Setup-Ally.command。
+3. 等待“安装完成”，再双击 Start-Ally 或桌面 Ally Legal Flex 入口。
+   首次如有钥匙串、凭据保存或本机证书提示，请在系统窗口自行确认。
+4. 在桌面版 Word 的 Home / 开始 → Ally Legal Flex 打开插件与 Config。
+
+Config 有三个可自由配置的标签：
+- Company Policies：管理 Policy Sets，Excel 批量导入、模板及下载迁移。
+- Model Settings：分别填写、测试并保存 Chat Model 和 Embedding Model。
+- Prompt Settings：编辑 Ask、Summary、Review 的提示词，保存或恢复默认。
+
+日常使用
+- 双击桌面入口启动，使用期间保留启动窗口。
+- Windows 首次如提示 Failed to add loopback exemption（该步骤需要管理员权限），可以忽略：
+  插件仍会载入。若侧边栏空白，右键 Start-Ally.cmd 选“以管理员身份运行”一次。
+- 在 General Settings 选择语言、填写主体对应关系并勾选适用的 Policy Sets。
+- 使用 Ask、Summary 或 Review & Mark-up。
+- 结束时先保存文档，再在启动窗口按 Enter。
+
+安装中断时可重新运行 Setup；已有模型、政策和提示词配置会保留。
+运行组件在项目内，请勿在安装后随意移动或删除项目文件夹。
+本包首次联网准备依赖，需要自行安装桌面版 Word并提供模型接口。
+模型 API Key 以明文保存在项目主目录的 model_config.json，请勿压缩发送
+整个项目文件夹，也不要把该文件传到网盘或代码仓库。
+Mac 若提示没有执行权限，在终端输入 bash 加一个空格，将
+Setup-Ally.command 拖入终端后按回车。其他系统提示按使用手册处理。
+
+详细步骤和当前界面截图见：使用手册.docx。
+许可见 LICENSE、THIRD_PARTY_NOTICES.md 和 docs/licenses。
+
+English quick start
+Extract the complete ZIP into a permanent writable folder. On Windows x64,
+double-click Setup-Ally.cmd; on Mac, double-click Setup-Ally.command.
+Setup downloads project-local runtimes and dependencies (Internet required).
+After setup completes, use Start-Ally or the desktop launcher. Open Config
+in desktop Word to configure policies, chat/embedding models and the core
+prompts for Ask, Summary and Review. Keep the startup window open while using
+the add-in. Save your document, then press Enter in that window to stop.

@@ -1,0 +1,5 @@
+# Pinned to the versions this release was built and tested with (Python 3.11).
+# Transitive versions are resolved by the installer; re-run Setup --repair after
+# changing these, and update THIRD_PARTY_NOTICES.md when a version changes.
+promptflow==1.18.5
+openai==3.36.0

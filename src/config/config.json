@@ -1,0 +1,4 @@
+{
+    "prompt-flow-endpoint": "/local-api/flow/score",
+    "sso-enabled": false
+}

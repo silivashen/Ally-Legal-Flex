@@ -1,0 +1,98 @@
+.ally-model-settings {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 16px;
+  background: #fff;
+  color: #242424;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+}
+
+.ally-model-settings h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.ally-model-settings p {
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.ally-model-description,
+.ally-model-key-status {
+  color: #666;
+}
+
+.ally-model-settings label {
+  display: block;
+  margin: 14px 0 7px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.ally-model-settings .ally-model-input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  margin: 0 0 12px;
+  padding: 9px 12px;
+  border: 1px solid #b8b8b8;
+  border-radius: 5px;
+  background: #fff;
+  color: #242424;
+  font: inherit;
+  font-size: 14px;
+}
+
+.ally-model-settings input:focus,
+.ally-model-settings button:focus-visible {
+  outline: 2px solid #0f6cbd;
+  outline-offset: 2px;
+}
+
+.ally-model-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.ally-model-settings button {
+  box-sizing: border-box;
+  min-height: 40px;
+  max-width: 100%;
+  padding: 9px 16px;
+  border: 1px solid #113b51;
+  border-radius: 6px;
+  background: #113b51;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.ally-model-settings button:not(:disabled):hover {
+  background: #45788b;
+  border-color: #45788b;
+}
+
+.ally-model-settings button:disabled,
+.ally-model-settings input:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.ally-model-status {
+  white-space: pre-wrap;
+}
